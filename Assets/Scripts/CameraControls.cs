@@ -24,12 +24,13 @@ namespace Parabox.CSG.Demo
 		void Start()
 		{
 			distance = Vector3.Distance(transform.position, Vector3.zero);
+			Input.GetMouseButton(0);
 		}
 
 		void LateUpdate()
 		{
 			// Try to find the SelectionManager in scene and get the highlight material
-			SelectionManager sm = FindFirstObjectByType<SelectionManager>(); // FindObjectOfType
+			SelectionManager sm = FindFirstObjectByType<SelectionManager>(); // 
 			if (sm.isDragging == true)
 			{
 				return;

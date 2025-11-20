@@ -28,13 +28,14 @@ public class SelectionManager : MonoBehaviour
     ObjectController CheckHit()
     {
         ObjectController oc = null;
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             oc = hit.collider.GetComponent<ObjectController>();
-
+            
         }
+        Debug.Log(oc == null ? "Hit Object is null!" : "Hit Object found.");
 
         return oc;
     }
@@ -47,7 +48,6 @@ public class SelectionManager : MonoBehaviour
     void HandleSelection()
     {
         // On mouse down, try selecting
-        // if (Mouse.current.leftButton.wasPressedThisFrame)
         if (Input.GetMouseButtonDown(0))
         {
             ObjectController oc = CheckHit();
@@ -56,9 +56,9 @@ public class SelectionManager : MonoBehaviour
                 // Deselect previous
                 if (selectedObj != null)
                     selectedObj.Deselect();
-
+                Debug.Log("Check Point");
                 selectedObj = oc;
-                selectedObj.SetHighlightMaterial(highlightMaterial);
+                // selectedObj.SetHighlightMaterial(highlightMaterial);
                 selectedObj.Select();
 
                 SetDragState(true);
@@ -66,7 +66,6 @@ public class SelectionManager : MonoBehaviour
         }
             
         // Release drag
-        // if (Mouse.current.leftButton.wasReleasedThisFrame)
         if (Input.GetMouseButtonUp(0))
         {
             SetDragState(false);
@@ -77,8 +76,6 @@ public class SelectionManager : MonoBehaviour
     {
         if (!isDragging || selectedObj == null)
             return;
-        // Vector2 mousePos = Mouse.current.position.ReadValue();
-        // Ray ray = cam.ScreenPointToRay(mousePos);
 
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
